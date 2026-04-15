@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Template",
-  description: "A minimal Next.js starter template",
+  title: "ISBI Bandung - Seni Pertunjukan Jawa Barat",
+  description: "Sistem Pemetaan Ensiklopedia Seni Pertunjukan Jawa Barat",
 };
 
 export default function RootLayout({
