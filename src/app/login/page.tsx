@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,20 +17,25 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
-    if (!username || !password) {
-      setError("Username dan password harus diisi");
+    if (!email || !password) {
+      setError("Email dan password harus diisi");
       setLoading(false);
       return;
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
 
-    if (username === "admin" && password === "isbi2024") {
-      router.push("/");
+    if (result?.error) {
+      setError("Email atau password salah");
+      setLoading(false);
     } else {
-      setError("Username atau password salah");
+      router.push("/");
+      router.refresh();
     }
-    setLoading(false);
   };
 
   return (
@@ -37,23 +43,24 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="bg-neutral-800 rounded-lg shadow-xl p-8 border border-neutral-700">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-amber-500 mb-2">🎭</h1>
-            <h2 className="text-xl font-semibold text-white">Sistem Pemetaan</h2>
-            <p className="text-neutral-400 text-sm">Ensiklopedia Seni Pertunjukan Jawa Barat</p>
+            <h1 className="text-3xl font-bold text-amber-500 mb-2">🎭</h1>
+            <h2 className="text-2xl font-bold text-white">SIBUDI</h2>
+            <p className="text-neutral-400 text-sm">Sistem Pemetaan Budaya Indonesia</p>
+            <p className="text-neutral-500 text-xs mt-2">ISBI Bandung</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-neutral-300 mb-2">
-                Username
+              <label htmlFor="email" className="block text-sm font-medium text-neutral-300 mb-2">
+                Email
               </label>
               <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
-                placeholder="Masukkan username"
+                placeholder="nama@isbi.ac.id"
               />
             </div>
 
@@ -96,7 +103,16 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-6 p-4 bg-neutral-700/50 rounded-lg">
+            <p className="text-neutral-400 text-xs text-center mb-2">Akun Demo:</p>
+            <div className="text-neutral-500 text-xs space-y-1">
+              <p>Mahasiswa: mahasiswa@isbi.ac.id / isbi2024</p>
+              <p>Admin: admin@isbi.ac.id / admin123</p>
+              <p>Dosen: dosen@isbi.ac.id / dosen123</p>
+            </div>
+          </div>
+
+          <div className="mt-4 text-center">
             <Link href="/" className="text-sm text-neutral-400 hover:text-amber-500 transition">
               ← Kembali ke Peta
             </Link>
@@ -104,7 +120,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-neutral-500 text-xs mt-6">
-          © 2024 ISBI Bandung — Sistem Pemetaan Ensiklopedia Seni Pertunjukan Jawa Barat
+          © 2024 SIBUDI — ISBI Bandung
         </p>
       </div>
     </main>
