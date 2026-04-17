@@ -73,7 +73,7 @@ export default function LoginPage() {
             ))}
             <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-neutral-900/20 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6">
-              <h3 className="text-2xl font-bold text-white mb-2">Kesenian Jawa Barat</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">tampilan slideshow gambar kesenian jawa barat</h3>
               <p className="text-neutral-300 text-sm">Menampilkan warisan budaya Sunda yang kaya dan beragam</p>
             </div>
             <div className="absolute bottom-6 right-6 flex gap-2">
