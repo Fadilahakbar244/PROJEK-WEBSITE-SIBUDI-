@@ -49,7 +49,7 @@ export default async function Home() {
           <p className="text-neutral-400">Seni Pertunjukan Jawa Barat - ISBI Bandung</p>
         </div>
         <div className="bg-neutral-800 rounded-lg border border-neutral-700 min-h-[400px] flex items-center justify-center">
-          <p className="text-neutral-500">Memuat Peta...</p>
+          <p className="text-neutral-500">tampilan slideshow kesenian jawa barat</p>
         </div>
       </div>
     </main>
